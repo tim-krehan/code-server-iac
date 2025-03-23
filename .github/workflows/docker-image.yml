@@ -1,9 +1,9 @@
 name: Build and Push Docker Image
+
 on:
   push:
     branches: [ "main" ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
+    tags: [ 'v*.*.*' ] # Publish semver tags as releases
   pull_request:
     branches: [ "main" ]
 
@@ -14,24 +14,32 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  build_and_publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-      # This is used to complete the identity challenge
-      # with sigstore/fulcio when running outside of PRs.
-      id-token: write
+      id-token: write # Required for GitHub Container Registry authentication
 
     steps:
-      build_and_publish:
-        runs-on: ubuntu-latest
-        steps: 
-          - uses: actions/checkout@v3
-          - name: Build and push the image
-            run : |
-              VERSION=$(cat VERSION)
-              docker login --username tim-krehan --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
-              docker build . --tag ghcr.io/tim-krehan/code-server-docker:latest --tag ghcr.io/tim-krehan/code-server-docker:$VERSION
-              docker push ghcr.io/tim-krehan/code-server-docker:$VERSION
-              docker push ghcr.io/tim-krehan/code-server-docker:latest
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Read VERSION file
+        id: read_version
+        run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.GITHUB_ACTOR }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          docker build . \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
