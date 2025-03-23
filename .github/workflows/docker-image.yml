@@ -38,8 +38,6 @@ jobs:
       - name: Read VERSION file
         id: read_version
         run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
-        outputs:
-          VERSION: ${{ steps.read_version.outputs.VERSION }}
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
