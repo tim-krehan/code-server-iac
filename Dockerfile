@@ -12,8 +12,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Update and install required packages
 RUN apt-get update && apt-get install -y \
     software-properties-common \
-    && add-apt-repository -y ppa:projectatomic/ppa \
-    && apt-get update && apt-get install -y \
     podman \
     fuse-overlayfs \
     slirp4netns \
