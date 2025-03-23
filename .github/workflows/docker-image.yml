@@ -33,7 +33,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.GITHUB_ACTOR }}
+          username: tim-krehan
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
