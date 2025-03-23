@@ -21,10 +21,8 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
 
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -39,7 +37,9 @@ jobs:
 
       - name: Read VERSION file
         id: read_version
-        run: cat VERSION
+        run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+        outputs:
+          VERSION: ${{ steps.read_version.outputs.VERSION }}
 
       # Install the cosign tool except on PR
       # https://github.com/sigstore/cosign-installer
@@ -81,12 +81,12 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.read_version.outputs.VERSION }},latest
+          tags: ${{ env.VERSION }},latest
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            CODER_VERSION=${{ steps.read_version.outputs.VERSION }}
+            CODER_VERSION=${{ env.VERSION }}
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
