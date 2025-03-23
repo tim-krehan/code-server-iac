@@ -6,6 +6,9 @@ FROM ghcr.io/coder/code-server:$CODER_VERSION-ubuntu
 # Install necessary tools for Dockerfile development and rootless Docker
 USER root
 
+# Set non-interactive frontend for debconf to avoid tzdata prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Update and install required packages
 RUN apt-get update && apt-get install -y \
     software-properties-common \
