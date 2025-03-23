@@ -38,6 +38,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Read VERSION file
+        id: read_version
         run: cat VERSION
 
       # Install the cosign tool except on PR
