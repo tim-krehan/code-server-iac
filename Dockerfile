@@ -9,14 +9,13 @@ USER root
 # Set non-interactive frontend for debconf to avoid tzdata prompts
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Update and install required packages
+# Install additional tools or dependencies if needed
 RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    podman \
-    fuse-overlayfs \
-    slirp4netns \
-    uidmap \
-    iptables \
+    git \
+    curl \
+    vim \
+    docker.io \
+    docker-compose \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Configure rootless Podman
@@ -31,10 +30,7 @@ RUN code-server --install-extension ms-azuretools.vscode-docker \
     && code-server --install-extension redhat.vscode-yaml
 
 # Expose the default code-server port
-EXPOSE 8080
+# EXPOSE 8080
 
-# Set the entrypoint to code-server
-ENTRYPOINT ["dumb-init", "code-server"]
-
-WORKDIR /home/coder
-ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "."]
+# WORKDIR /home/coder
+# ENTRYPOINT ["/usr/bin/entrypoint.sh", "--bind-addr", "0.0.0.0:8080", "."]
