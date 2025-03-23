@@ -1,29 +1,5 @@
 name: Build and Push Docker Image
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Build Docker image
-        run: |
-          docker build \
-            --build-arg CODER_VERSION=$VERSION \
-            -t code-server-docker:$VERSION \
-            .
-name: Docker
-
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
