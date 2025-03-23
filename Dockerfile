@@ -1,5 +1,7 @@
+ARG CODER_VERSION
+
 # Use the base image for code-server
-FROM coder/code-server:CODER_VERSION-ubuntu
+FROM coder/code-server:$CODER_VERSION-ubuntu
 
 # Install necessary tools for Dockerfile development and rootless Docker
 USER root
