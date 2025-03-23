@@ -39,6 +39,7 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build . \
+            --build-arg CODER_VERSION=${{ env.VERSION }} \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
