@@ -31,15 +31,21 @@ RUN apt-get update && apt-get install -y \
     python3-venv \
     curl \
     git \
-    vim \
-    && curl -fsSL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz | tar -C /usr/local -xz \
+    vim
+
+# Install Go
+RUN curl -fsSL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz | tar -C /usr/local -xz \
     && ln -s /usr/local/go/bin/go /usr/bin/go \
-    && curl -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar -xz && mv linux-amd64/helm /usr/local/bin/helm \
-    && go install github.com/arttor/helmify/cmd/helmify@latest \
+    && mkdir -p /go/bin && chmod -R 777 /go && chown -R coder:coder /go
+
+# Install Helm, kubectl, Terraform, TFLint
+RUN curl -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar -xz && mv linux-amd64/helm /usr/local/bin/helm \
     && curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && chmod +x kubectl && mv kubectl /usr/local/bin/ \
     && curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip && unzip terraform.zip && mv terraform /usr/local/bin/ && rm terraform.zip \
-    && curl -fsSL https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip -o tflint.zip && unzip tflint.zip && mv tflint /usr/local/bin/ && rm tflint.zip \
-    && curl -fsSL https://github.com/PowerShell/PowerShell/releases/download/v${POWERSHELL_VERSION}/powershell-${POWERSHELL_VERSION}-linux-x64.tar.gz | tar -xz -C /usr/local/bin/ \
+    && curl -fsSL https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip -o tflint.zip && unzip tflint.zip && mv tflint /usr/local/bin/ && rm tflint.zip
+
+# Install PowerShell
+RUN curl -fsSL https://github.com/PowerShell/PowerShell/releases/download/v${POWERSHELL_VERSION}/powershell-${POWERSHELL_VERSION}-linux-x64.tar.gz | tar -xz -C /usr/local/bin/ \
     && chmod +x /usr/local/bin/pwsh \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -62,6 +68,11 @@ RUN (type -p wget >/dev/null || (sudo apt update && sudo apt-get install wget -y
 
 # Switch back to the non-root user
 USER coder
+
+# Install Go packages
+ENV PATH=$PATH:/go/bin
+ENV GOPATH=/go
+RUN go install github.com/arttor/helmify/cmd/helmify@latest
 
 # Install recommended VS Code extensions for Dockerfile development
 RUN    code-server --install-extension ms-azuretools.vscode-docker \
