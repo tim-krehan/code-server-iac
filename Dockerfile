@@ -10,6 +10,7 @@ ARG KUBECTL_VERSION=1.32.2
 ARG TERRAFORM_VERSION=1.11.2
 ARG TFLINT_VERSION=0.55.1
 ARG POWERSHELL_VERSION=7.5.0
+ARG ARGOCD_VERSION=2.14.9
 
 # Install necessary tools for Dockerfile development and rootless Docker
 USER root
@@ -37,6 +38,12 @@ RUN apt-get update && apt-get install -y \
 RUN curl -sSLO https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb \
 && dpkg -i k9s_linux_amd64.deb \
 && rm k9s_linux_amd64.deb
+
+# Install ArgoCD CLI
+ARG ARGOCD_VERSION=2.8.3
+RUN curl -fsSL -o /tmp/argocd-linux-amd64 "https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64" && \
+    chmod 0555 /tmp/argocd-linux-amd64 && \
+    mv /tmp/argocd-linux-amd64 /usr/local/bin/argocd
 
 # Install Go
 RUN curl -fsSL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz | tar -C /usr/local -xz \
