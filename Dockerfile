@@ -33,6 +33,11 @@ RUN apt-get update && apt-get install -y \
     git \
     vim
 
+# Install k9s
+RUN curl -sSLO https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb \
+&& dpkg -i k9s_linux_amd64.deb \
+&& rm k9s_linux_amd64.deb
+
 # Install Go
 RUN curl -fsSL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz | tar -C /usr/local -xz \
     && ln -s /usr/local/go/bin/go /usr/bin/go \
@@ -72,7 +77,9 @@ USER coder
 # Install Go packages
 ENV PATH=$PATH:/go/bin
 ENV GOPATH=/go
-RUN go install github.com/arttor/helmify/cmd/helmify@latest
+RUN go install github.com/arttor/helmify/cmd/helmify@latest && \
+    go install sigs.k8s.io/kustomize/kustomize/v5@latest && \
+    go install github.com/stern/stern@latest
 
 # Install recommended VS Code extensions for Dockerfile development
 RUN    code-server --install-extension ms-azuretools.vscode-docker \
