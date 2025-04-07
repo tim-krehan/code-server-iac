@@ -58,7 +58,8 @@ RUN curl -fsSL https://github.com/PowerShell/PowerShell/releases/download/v${POW
 RUN pip3 install --no-cache-dir \
     boto3 \
     requests \
-    ansible
+    ansible \
+    ansible-lint
 
 RUN curl -sS https://starship.rs/install.sh | sh -s -- --yes
 
