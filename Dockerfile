@@ -11,6 +11,7 @@ ARG TERRAFORM_VERSION=1.11.4
 ARG TFLINT_VERSION=0.56.0
 ARG POWERSHELL_VERSION=7.5.0
 ARG ARGOCD_VERSION=2.14.9
+ARG K9S_VERSION=0.50.1
 
 # Install necessary tools for Dockerfile development and rootless Docker
 USER root
@@ -35,12 +36,11 @@ RUN apt-get update && apt-get install -y \
     vim
 
 # Install k9s
-RUN curl -sSLO https://github.com/derailed/k9s/releases/latest/download/k9s_linux_amd64.deb \
+RUN curl -sSLO https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_linux_amd64.deb \
 && dpkg -i k9s_linux_amd64.deb \
 && rm k9s_linux_amd64.deb
 
 # Install ArgoCD CLI
-ARG ARGOCD_VERSION=2.8.3
 RUN curl -fsSL -o /tmp/argocd-linux-amd64 "https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64" && \
     chmod 0555 /tmp/argocd-linux-amd64 && \
     mv /tmp/argocd-linux-amd64 /usr/local/bin/argocd
