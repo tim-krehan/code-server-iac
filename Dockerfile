@@ -1,4 +1,4 @@
-ARG CODER_VERSION=4.99.3
+ARG CODER_VERSION=4.99.4
 
 # Use the base image for code-server
 FROM ghcr.io/coder/code-server:$CODER_VERSION-noble
