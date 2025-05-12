@@ -1,4 +1,4 @@
-ARG CODER_VERSION=4.99.4
+ARG CODER_VERSION=4.100.0
 
 # Use the base image for code-server
 FROM ghcr.io/coder/code-server:$CODER_VERSION-noble
@@ -11,7 +11,7 @@ ARG TERRAFORM_VERSION=1.11.4
 ARG TFLINT_VERSION=0.57.0
 ARG POWERSHELL_VERSION=7.5.1
 ARG ARGOCD_VERSION=3.0.0
-ARG K9S_VERSION=0.50.5
+ARG K9S_VERSION=0.50.6
 ARG PYTHON_VERSION=3.12
 
 # Install necessary tools for Dockerfile development and rootless Docker
