@@ -87,3 +87,5 @@ RUN    code-server --install-extension ms-azuretools.vscode-docker \
     && code-server --install-extension ms-kubernetes-tools.vscode-kubernetes-tools \
     && code-server --install-extension hashicorp.terraform \
     && code-server --install-extension ms-vscode.powershell
+
+ENV CODER_VERSION_IAC=$CODER_VERSION
