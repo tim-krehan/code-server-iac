@@ -24,9 +24,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Read VERSION file
-        id: read_version
-        run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
+      - name: Get the base image version
+        id: base_image_version
+        run: |
+          BASE_VERSION=$(grep -oP '(?<=^FROM ghcr.io\/coder\/code-server:)[\d\.]+' Dockerfile)
+          echo "BASE_VERSION=${BASE_VERSION}" >> $GITHUB_ENV
 
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v3
@@ -38,12 +40,12 @@ jobs:
       - name: Build and push Docker image
         run: |
           docker build . \
-            --build-arg CODER_VERSION=${{ env.VERSION }} \
+            --build-arg CODER_VERSION=${{ env.BASE_VERSION }} \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}
 
       - name: Push Docker image
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.VERSION }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
