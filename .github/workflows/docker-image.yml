@@ -28,6 +28,7 @@ jobs:
         id: base_image_version
         run: |
           BASE_VERSION=$(grep -oP '(?<=^FROM ghcr.io\/coder\/code-server:)[\d\.]+' Dockerfile)
+          echo "Base image version found: ${BASE_VERSION}"
           echo "BASE_VERSION=${BASE_VERSION}" >> $GITHUB_ENV
 
       - name: Log into registry ${{ env.REGISTRY }}

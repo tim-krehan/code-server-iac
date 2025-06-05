@@ -21,7 +21,7 @@ ARG ARGOCD_VERSION=3.0.5
 ARG K9S_VERSION=0.50.6
 # https://devguide.python.org/versions/
 # https://github.com/python/cpython/tags
-ARG PYTHON_VERSION=3.13
+ARG PYTHON_VERSION=3.12
 
 # Install necessary tools for Dockerfile development and rootless Docker
 USER root
