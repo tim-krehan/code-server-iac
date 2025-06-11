@@ -4,11 +4,11 @@ FROM ghcr.io/coder/code-server:4.100.3-noble
 # Define arguments for tool versions
 
 # https://github.com/golang/go/tags
-ARG GOLANG_VERSION=1.24.3
+ARG GOLANG_VERSION=1.24.4
 # https://github.com/helm/helm/releases/latest
 ARG HELM_VERSION=3.18.2
 # https://github.com/k3s-io/k3s/releases/latest
-ARG KUBECTL_VERSION=1.32.3
+ARG KUBECTL_VERSION=1.33.1
 # https://github.com/hashicorp/terraform/releases/latest
 ARG TERRAFORM_VERSION=1.12.1
 # https://github.com/terraform-linters/tflint/releases/latest
@@ -16,7 +16,7 @@ ARG TFLINT_VERSION=0.58.0
 # https://github.com/PowerShell/PowerShell/releases/latest
 ARG POWERSHELL_VERSION=7.5.1
 # https://github.com/argoproj/argo-cd/releases/latest
-ARG ARGOCD_VERSION=3.0.5
+ARG ARGOCD_VERSION=3.0.6
 # https://github.com/derailed/k9s/releases/latest
 ARG K9S_VERSION=0.50.6
 # https://devguide.python.org/versions/
