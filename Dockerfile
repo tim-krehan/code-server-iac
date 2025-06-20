@@ -6,11 +6,11 @@ FROM ghcr.io/coder/code-server:4.100.3-noble
 # https://github.com/golang/go/tags
 ARG GOLANG_VERSION=1.24.4
 # https://github.com/helm/helm/releases/latest
-ARG HELM_VERSION=3.18.2
+ARG HELM_VERSION=3.18.3
 # https://github.com/k3s-io/k3s/releases/latest
 ARG KUBECTL_VERSION=1.33.1
 # https://github.com/hashicorp/terraform/releases/latest
-ARG TERRAFORM_VERSION=1.12.1
+ARG TERRAFORM_VERSION=1.12.2
 # https://github.com/terraform-linters/tflint/releases/latest
 ARG TFLINT_VERSION=0.58.0
 # https://github.com/PowerShell/PowerShell/releases/latest
