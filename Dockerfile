@@ -1,5 +1,5 @@
 # Use the base image for code-server
-FROM ghcr.io/coder/code-server:4.101.1-noble
+FROM ghcr.io/coder/code-server:4.101.2-noble
 
 # Define arguments for tool versions
 
