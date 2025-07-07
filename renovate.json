@@ -8,9 +8,8 @@
       "customType": "regex",
       "fileMatch": ["Dockerfile"],
       "matchStrings": [
-        "ARG\\s+(?<depName>[A-Z_]+)_VERSION=(?<currentValue>.+)"
+        "ARG\\s+(?<datasource>.+):(?<depName>[\\w\\-/]+)\\s+ARG\\s+\\w+_VERSION=(?<currentValue>[\\d\\.]+)"
       ],
-      "depNameTemplate": "{{depName | lower}}",
       "versioningTemplate": "semver"
     }
   ],
