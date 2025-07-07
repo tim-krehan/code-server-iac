@@ -5,103 +5,14 @@
   ],
   "customManagers": [
     {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
+      "customType": "regex",
+      "managerFilePatterns": ["^Dockerfile$"],
       "matchStrings": [
-        "ARG GOLANG_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+        "# (?<datasource>.+)\\nARG (?<depName>[A-Z0-9]+)_VERSION=(?<currentValue>[\\d\\.]+)"
       ],
       "depName": "golang/go",
       "datasource": "github-tags",
       "versioning": "semver"
-    },
-    {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG HELM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depName": "helm/helm",
-      "datasource": "github-releases",
-      "versioning": "semver"
-    },
-    {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG KUBECTL_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depName": "k3s-io/k3s",
-      "datasource": "github-releases",
-      "versioning": "semver"
-    },
-    {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG TERRAFORM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depName": "hashicorp/terraform",
-      "datasource": "github-releases",
-      "versioning": "semver"
-    },
-    {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG TFLINT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depName": "terraform-linters/tflint",
-      "datasource": "github-releases",
-      "versioning": "semver"
-    },
-    {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG POWERSHELL_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depName": "PowerShell/PowerShell",
-      "datasource": "github-releases",
-      "versioning": "semver"
-    },
-    {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG ARGOCD_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depName": "argoproj/argo-cd",
-      "datasource": "github-releases",
-      "versioning": "semver"
-    },
-    {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG K9S_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depName": "derailed/k9s",
-      "datasource": "github-releases",
-      "versioning": "semver"
-    },
-    {
-      "managerFilePatterns": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ARG PYTHON_VERSION=(?<currentValue>\\d+\\.\\d+)"
-      ],
-      "depName": "python/cpython",
-      "datasource": "github-tags",
-      "versioning": "pep440"
     }
   ],
   "packageRules": [
