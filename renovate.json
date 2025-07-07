@@ -9,10 +9,7 @@
       "managerFilePatterns": ["^Dockerfile$"],
       "matchStrings": [
         "# (?<datasource>.+)\\nARG (?<depName>[A-Z0-9]+)_VERSION=(?<currentValue>[\\d\\.]+)"
-      ],
-      "depName": "golang/go",
-      "datasource": "github-tags",
-      "versioning": "semver"
+      ]
     }
   ],
   "packageRules": [
