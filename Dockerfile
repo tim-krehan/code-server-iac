@@ -1,14 +1,12 @@
 # Use the base image for code-server
 FROM ghcr.io/coder/code-server:4.101.2-noble
 
-# Define arguments for tool versions
-
-# github-tags:golang/go
+# github-releases:golang/go
 ARG GOLANG_VERSION=1.24.4
 # github-releases:helm/helm
 ARG HELM_VERSION=3.18.3
 # github-releases:k3s-io/k3s
-ARG KUBECTL_VERSION=1.33.1
+ARG KUBECTL_VERSION=1.33.0
 # github-releases:hashicorp/terraform
 ARG TERRAFORM_VERSION=1.12.2
 # github-releases:terraform-linters/tflint
@@ -19,7 +17,7 @@ ARG POWERSHELL_VERSION=7.5.1
 ARG ARGOCD_VERSION=3.0.6
 # github-releases:derailed/k9s
 ARG K9S_VERSION=0.50.6
-# github-tags:python/cpython
+# github-releases:python/cpython
 ARG PYTHON_VERSION=3.12
 
 # Install necessary tools for Dockerfile development and rootless Docker
