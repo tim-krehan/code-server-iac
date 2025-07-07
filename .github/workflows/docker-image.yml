@@ -44,7 +44,7 @@ jobs:
           username: tim-krehan
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         run: |
           docker build . \
             --build-arg CODER_VERSION=${{ env.BASE_VERSION }} \
