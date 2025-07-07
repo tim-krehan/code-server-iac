@@ -16,7 +16,7 @@ ARG POWERSHELL_VERSION=7.5.1
 # github-releases:argoproj/argo-cd
 ARG ARGOCD_VERSION=3.0.6
 # github-releases:derailed/k9s
-ARG K9S_VERSION=0.50.6
+ARG K9S_VERSION=0.50.7
 # managed manually
 ARG PYTHON_VERSION=3.12
 
