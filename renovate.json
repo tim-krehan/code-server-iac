@@ -6,10 +6,12 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["^Dockerfile$"],
+      "fileMatch": ["Dockerfile"],
       "matchStrings": [
-        "# (?<datasource>[^:]+):(?<depName>[^\\s]+)\\s*\\nARG (?<argName>[A-Z0-9_]+)_VERSION=(?<currentValue>[\\d\\.]+)"
-      ]
+        "ARG\\s+(?<depName>[A-Z_]+)_VERSION=(?<currentValue>.+)"
+      ],
+      "depNameTemplate": "{{depName | lower}}",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
