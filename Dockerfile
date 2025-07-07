@@ -14,7 +14,7 @@ ARG TERRAFORM_VERSION=1.12.2
 # github-releases:terraform-linters/tflint
 ARG TFLINT_VERSION=0.58.0
 # github-releases:PowerShell/PowerShell
-ARG POWERSHELL_VERSION=7.5.1
+ARG POWERSHELL_VERSION=7.5.2
 # github-releases:argoproj/argo-cd
 ARG ARGOCD_VERSION=3.0.6
 # github-releases:derailed/k9s
