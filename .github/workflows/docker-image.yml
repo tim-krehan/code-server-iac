@@ -31,6 +31,12 @@ jobs:
           echo "Base image version found: ${BASE_VERSION}"
           echo "BASE_VERSION=${BASE_VERSION}" >> $GITHUB_ENV
 
+      - name: Get short git SHA
+        id: git_sha
+        run: |
+          GIT_SHA=$(git rev-parse --short HEAD)
+          echo "GIT_SHA=${GIT_SHA}" >> $GITHUB_ENV
+
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v3
         with:
@@ -43,10 +49,12 @@ jobs:
           docker build . \
             --build-arg CODER_VERSION=${{ env.BASE_VERSION }} \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }} \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}-${{ env.GIT_SHA }}
 
       - name: Push Docker image
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}-${{ env.GIT_SHA }}
