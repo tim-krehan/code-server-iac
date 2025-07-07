@@ -1,7 +1,24 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  "extends": ["config:recommended"],
+  "regexManagers": [
+    {
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": [
+        "ARG GOLANG_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG HELM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG KUBECTL_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG TERRAFORM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG TFLINT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG POWERSHELL_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG ARGOCD_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG K9S_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
+        "ARG PYTHON_VERSION=(?<currentValue>\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "github-tags",
+      "versioningTemplate": "semver",
+      "depNameTemplate": "{{argName}}"
+    }
   ],
   "packageRules": [
     {
