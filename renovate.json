@@ -8,7 +8,7 @@
       "customType": "regex",
       "managerFilePatterns": ["^Dockerfile$"],
       "matchStrings": [
-        "# (?<datasource>.+)\\nARG (?<depName>[A-Z0-9]+)_VERSION=(?<currentValue>[\\d\\.]+)"
+        "# (?<datasource>[^:]+):(?<depName>[^\\s]+)\\s*\\nARG (?<argName>[A-Z0-9_]+)_VERSION=(?<currentValue>[\\d\\.]+)"
       ]
     }
   ],
