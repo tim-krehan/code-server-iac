@@ -1,28 +1,119 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended"
+  ],
   "regexManagers": [
     {
-      "fileMatch": ["^Dockerfile$"],
-      "matchStrings": [
-        "ARG GOLANG_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "ARG HELM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "ARG KUBECTL_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "ARG TERRAFORM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "ARG TFLINT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "ARG POWERSHELL_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "ARG ARGOCD_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "ARG K9S_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)",
-        "ARG PYTHON_VERSION=(?<currentValue>\\d+\\.\\d+)"
-      ],
-      "datasourceTemplate": "github-tags",
-      "versioningTemplate": "semver",
-      "depNameTemplate": "{{argName}}"
+      "regexManagers": [
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG GOLANG_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+          ],
+          "depName": "golang/go",
+          "datasource": "github-tags",
+          "versioning": "semver"
+        },
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG HELM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+          ],
+          "depName": "helm/helm",
+          "datasource": "github-releases",
+          "versioning": "semver"
+        },
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG KUBECTL_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+          ],
+          "depName": "k3s-io/k3s",
+          "datasource": "github-releases",
+          "versioning": "semver"
+        },
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG TERRAFORM_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+          ],
+          "depName": "hashicorp/terraform",
+          "datasource": "github-releases",
+          "versioning": "semver"
+        },
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG TFLINT_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+          ],
+          "depName": "terraform-linters/tflint",
+          "datasource": "github-releases",
+          "versioning": "semver"
+        },
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG POWERSHELL_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+          ],
+          "depName": "PowerShell/PowerShell",
+          "datasource": "github-releases",
+          "versioning": "semver"
+        },
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG ARGOCD_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+          ],
+          "depName": "argoproj/argo-cd",
+          "datasource": "github-releases",
+          "versioning": "semver"
+        },
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG K9S_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+          ],
+          "depName": "derailed/k9s",
+          "datasource": "github-releases",
+          "versioning": "semver"
+        },
+        {
+          "fileMatch": [
+            "^Dockerfile$"
+          ],
+          "matchStrings": [
+            "ARG PYTHON_VERSION=(?<currentValue>\\d+\\.\\d+)"
+          ],
+          "depName": "python/cpython",
+          "datasource": "github-tags",
+          "versioning": "pep440"
+        }
+      ]
     }
   ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "matchCurrentVersion": "!/^0/",
       "automerge": true
     }
