@@ -82,9 +82,7 @@ USER coder
 ENV PATH=$PATH:/go/bin
 ENV GOPATH=/go
 
-ENV CODER_VERSION_IAC=$CODER_VERSION
-
-LABEL org.opencontainers.image.description "Development environment for infrastructure-as-code with code-server, Go, Python, Kubernetes, Terraform, and related tools."
+LABEL org.opencontainers.image.description="Development environment for infrastructure-as-code with code-server, Go, Python, Kubernetes, Terraform, and related tools."
 LABEL GOLANG_VERSION=${GOLANG_VERSION} \
       HELM_VERSION=${HELM_VERSION} \
       KUBECTL_VERSION=${KUBECTL_VERSION} \
