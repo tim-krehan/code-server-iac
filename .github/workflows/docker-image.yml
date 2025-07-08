@@ -23,19 +23,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Get the base image version
-        id: base_image_version
+      
+      - name: Get the current date for date-based versioning
+        id: date_version
         run: |
-          BASE_VERSION=$(grep -oP '(?<=^FROM ghcr.io\/coder\/code-server:)[\d\.]+' Dockerfile)
-          echo "Base image version found: ${BASE_VERSION}"
-          echo "BASE_VERSION=${BASE_VERSION}" >> $GITHUB_ENV
+          DATE_VERSION=$(date +'%Y.%m')
+          echo "DATE_VERSION=${DATE_VERSION}" >> $GITHUB_ENV
 
-      - name: Get short git SHA
-        id: git_sha
+      - name: Check the count of released tags in the current month
+        id: tag_count
         run: |
-          GIT_SHA=$(git rev-parse --short HEAD)
-          echo "GIT_SHA=${GIT_SHA}" >> $GITHUB_ENV
+          TAG_COUNT=$(git tag --list "v${{ env.DATE_VERSION }}.*" | wc -l)
+          echo "TAG_COUNT=${TAG_COUNT}" >> $GITHUB_ENV
 
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v3
@@ -48,12 +47,10 @@ jobs:
         run: |
           docker build . \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
-            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }} \
-            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}-${{ env.GIT_SHA }}
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DATE_VERSION }}.${{ env.TAG_COUNT }}
 
       - name: Push Docker image
         if: ${{ github.event_name != 'pull_request' }}
         run: |
           docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.BASE_VERSION }}-${{ env.GIT_SHA }}
+          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DATE_VERSION }}.${{ env.TAG_COUNT }}
