@@ -18,7 +18,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      repo: write # Required for creating tags
       id-token: write # Required for GitHub Container Registry authentication
 
     steps:
@@ -40,7 +39,6 @@ jobs:
       - name: Tag the current commit
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          git config --global user.name "GitHub Actions"
           echo "Current tag count: $TAG_COUNT"
           if [ -z "$TAG_COUNT" ]; then
             echo "No tags found for this month, starting at 1."
