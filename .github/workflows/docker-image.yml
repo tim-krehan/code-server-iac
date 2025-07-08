@@ -48,6 +48,7 @@ jobs:
           fi
           NEW_VERSION=v${DATE_VERSION}.${TAG_COUNT}
           echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
+          git config --global user.name "GitHub Actions"
           git tag -a "$NEW_VERSION" -m "Release $NEW_VERSION"
           git push origin "$NEW_VERSION"
 
