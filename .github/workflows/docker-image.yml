@@ -47,7 +47,7 @@ jobs:
           else
             TAG_COUNT=$((TAG_COUNT + 1))
           fi
-          NEW_VERSION=v${DATE_VERSION}.${TAG_COUNT}
+          NEW_VERSION=${DATE_VERSION}.${TAG_COUNT}
           echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
             git config --global user.name "${{ github.actor }}"
             git config --global user.email "${{ github.actor }}@users.noreply.github.com"
