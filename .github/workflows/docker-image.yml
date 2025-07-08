@@ -33,6 +33,7 @@ jobs:
       - name: Check the count of released tags in the current month
         id: tag_count
         run: |
+          git fetch --tags
           TAG_COUNT=$(git tag --list "${{ env.DATE_VERSION }}.*" | wc -l)
           echo "TAG_COUNT=${TAG_COUNT}" >> $GITHUB_ENV
 
