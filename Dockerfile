@@ -74,7 +74,7 @@ RUN set -eux; \
     # Install Starship
     curl -sS https://starship.rs/install.sh | sh -s -- --yes && \
     # Install GitHub CLI
-    curl -fsSL https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.tar.gz | tar -xz -C /tmp && mv /tmp/gh_${GHCLI_VERSION}_linux_amd64/bin/gh /usr/local/bin/ && rm -rf /tmp/gh_${GHCLI_VERSION}_linux_amd64
+    curl -fsSL https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.tar.gz | tar -xz -C /tmp && mv /tmp/gh_${GHCLI_VERSION}_linux_amd64/bin/gh /usr/bin/ && rm -rf /tmp/gh_${GHCLI_VERSION}_linux_amd64
 
 # Switch back to the non-root user
 USER coder

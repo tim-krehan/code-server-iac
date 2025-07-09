@@ -25,34 +25,26 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Get the current date for date-based versioning
-        id: date_version
         run: |
           DATE_VERSION=$(date +'%Y.%m')
           echo "DATE_VERSION=${DATE_VERSION}" >> $GITHUB_ENV
 
       - name: Check the count of released tags in the current month
-        id: tag_count
         run: |
           git fetch --tags
           TAG_COUNT=$(git tag --list "${{ env.DATE_VERSION }}.*" | wc -l)
-          echo "TAG_COUNT=${TAG_COUNT}" >> $GITHUB_ENV
+          TAG_COUNT=$((TAG_COUNT + 1))
+          NEW_VERSION=${DATE_VERSION}.${TAG_COUNT}
+          echo "NEW_VERSION=${NEW_VERSION}"
+          echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
 
       - name: Tag the current commit
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          echo "Current tag count: $TAG_COUNT"
-          if [ -z "$TAG_COUNT" ]; then
-            echo "No tags found for this month, starting at 1."
-            TAG_COUNT=1
-          else
-            TAG_COUNT=$((TAG_COUNT + 1))
-          fi
-          NEW_VERSION=${DATE_VERSION}.${TAG_COUNT}
-          echo "NEW_VERSION=${NEW_VERSION}" >> $GITHUB_ENV
-            git config --global user.name "${{ github.actor }}"
-            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-          git tag -a "$NEW_VERSION" -m "Release $NEW_VERSION"
-          git push origin "$NEW_VERSION"
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git tag -a "${{ env.NEW_VERSION }}" -m "Release ${{ env.NEW_VERSION }}"
+          git push origin "${{ env.NEW_VERSION }}"
 
       - name: Log into registry ${{ env.REGISTRY }}
         uses: docker/login-action@v3
