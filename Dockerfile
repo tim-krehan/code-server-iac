@@ -8,7 +8,7 @@ ARG GHCLI_VERSION=2.74.2
 # github-releases:golang/go
 ARG GOLANG_VERSION=1.24.4
 # github-releases:helm/helm
-ARG HELM_VERSION=3.18.3
+ARG HELM_VERSION=3.18.4
 # github-releases:arttor/helmify
 ARG HELMIFY_VERSION=0.4.18
 # github-releases:derailed/k9s
@@ -74,7 +74,7 @@ RUN set -eux; \
     # Install Starship
     curl -sS https://starship.rs/install.sh | sh -s -- --yes && \
     # Install GitHub CLI
-    curl -fsSL https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.tar.gz | tar -xz -C /tmp && mv /tmp/gh_${GHCLI_VERSION}_linux_amd64/bin/gh /usr/local/bin/ && rm -rf /tmp/gh_${GHCLI_VERSION}_linux_amd64
+    curl -fsSL https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.tar.gz | tar -xz -C /tmp && mv /tmp/gh_${GHCLI_VERSION}_linux_amd64/bin/gh /usr/bin/ && rm -rf /tmp/gh_${GHCLI_VERSION}_linux_amd64
 
 # Switch back to the non-root user
 USER coder
