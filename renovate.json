@@ -3,6 +3,9 @@
   "extends": [
     "config:recommended"
   ],
+  "assignees": [
+    "github@timkrehan.de"
+  ],
   "customManagers": [
     {
       "customType": "regex",
