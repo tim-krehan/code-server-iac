@@ -12,7 +12,7 @@ ARG HELM_VERSION=3.18.4
 # github-releases:arttor/helmify
 ARG HELMIFY_VERSION=0.4.18
 # github-releases:derailed/k9s
-ARG K9S_VERSION=0.50.8
+ARG K9S_VERSION=0.50.9
 # managed manually, must match the cluster :)
 ARG KUBECTL_VERSION=1.33.1
 # github-releases:kubernetes-sigs/kustomize
