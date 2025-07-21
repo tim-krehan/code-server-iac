@@ -14,7 +14,7 @@ ARG HELMIFY_VERSION=0.4.18
 # github-releases:derailed/k9s
 ARG K9S_VERSION=0.50.9
 # managed manually, must match the cluster :)
-ARG KUBECTL_VERSION=1.33.1
+ARG KUBECTL_VERSION=1.33.2
 # github-releases:kubernetes-sigs/kustomize
 ARG KUSTOMIZE_VERSION=5.6.0
 # github-releases:PowerShell/PowerShell
