@@ -4,7 +4,7 @@ FROM ghcr.io/coder/code-server:4.102.1-noble
 # github-releases:argoproj/argo-cd
 ARG ARGOCD_VERSION=3.0.11
 # github-releases:cli/cli
-ARG GHCLI_VERSION=2.76.0
+ARG GHCLI_VERSION=2.76.1
 # github-releases:golang/go
 ARG GOLANG_VERSION=1.24.4
 # github-releases:helm/helm
