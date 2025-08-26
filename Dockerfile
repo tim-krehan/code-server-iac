@@ -1,5 +1,5 @@
 # Use the base image for code-server
-FROM ghcr.io/coder/code-server:4.103.1-noble
+FROM ghcr.io/coder/code-server:4.103.2-noble
 
 # github-releases:argoproj/argo-cd
 ARG ARGOCD_VERSION=3.1.1
