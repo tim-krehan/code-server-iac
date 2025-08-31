@@ -1,6 +1,8 @@
 # Use the base image for code-server
 FROM ghcr.io/coder/code-server:4.103.2-noble
 
+ARG CODE_SERVER_IAC_VERSION=0.0.0
+
 # github-releases:argoproj/argo-cd
 ARG ARGOCD_VERSION=3.1.1
 # github-releases:cli/cli
@@ -81,6 +83,7 @@ USER coder
 
 ENV PATH=$PATH:/go/bin
 ENV GOPATH=/go
+ENV CODE_SERVER_IAC_VERSION=${CODE_SERVER_IAC_VERSION}
 
 LABEL org.opencontainers.image.description="Development environment for infrastructure-as-code with code-server, Go, Python, Kubernetes, Terraform, and related tools."
 LABEL GOLANG_VERSION=${GOLANG_VERSION} \
