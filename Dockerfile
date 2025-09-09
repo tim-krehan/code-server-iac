@@ -6,7 +6,7 @@ ARG CODE_SERVER_IAC_VERSION=0.0.0
 # github-releases:argoproj/argo-cd
 ARG ARGOCD_VERSION=3.1.4
 # github-releases:cli/cli
-ARG GHCLI_VERSION=2.78.0
+ARG GHCLI_VERSION=2.79.0
 # github-releases:golang/go
 ARG GOLANG_VERSION=1.24.4
 # github-releases:helm/helm
