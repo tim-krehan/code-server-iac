@@ -10,7 +10,7 @@ ARG GHCLI_VERSION=2.79.0
 # github-releases:golang/go
 ARG GOLANG_VERSION=1.24.4
 # github-releases:helm/helm
-ARG HELM_VERSION=3.18.6
+ARG HELM_VERSION=3.19.0
 # github-releases:arttor/helmify
 ARG HELMIFY_VERSION=0.4.18
 # github-releases:derailed/k9s
