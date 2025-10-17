@@ -48,6 +48,7 @@ RUN  set -eux; apt-get update && apt-get install -y \
     curl \
     git \
     vim \
+    jq \
     && rm -rf /var/lib/apt/lists/*
 
 # Install k9s
