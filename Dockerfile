@@ -18,7 +18,7 @@ ARG K9S_VERSION=0.50.16
 # managed manually, must match the cluster :)
 ARG KUBECTL_VERSION=1.34.2
 # github-releases:kubernetes/kompose
-ARG KOMPOSE_VERSION=1.36.0
+ARG KOMPOSE_VERSION=1.37.0
 # github-releases:kubernetes-sigs/kustomize
 ARG KUSTOMIZE_VERSION=5.6.0
 # github-releases:PowerShell/PowerShell
