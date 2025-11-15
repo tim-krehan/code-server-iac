@@ -16,7 +16,9 @@ ARG HELMIFY_VERSION=0.4.19
 # github-releases:derailed/k9s
 ARG K9S_VERSION=0.50.16
 # managed manually, must match the cluster :)
-ARG KUBECTL_VERSION=1.33.2
+ARG KUBECTL_VERSION=1.34.2
+# github-releases:kubernetes/kompose
+ARG KOMPOSE_VERSION=1.36.0
 # github-releases:kubernetes-sigs/kustomize
 ARG KUSTOMIZE_VERSION=5.6.0
 # github-releases:PowerShell/PowerShell
@@ -67,6 +69,7 @@ RUN set -eux; \
     curl -fsSL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz|tar -C /usr/local/bin/ -xz && \
     curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && chmod +x kubectl && mv kubectl /usr/local/bin/ && \
     curl -fsSL https://github.com/stern/stern/releases/download/v${STERN_VERSION}/stern_${STERN_VERSION}_linux_amd64.tar.gz|tar -C /usr/local/bin/ -xz && rm /usr/local/bin/LICENSE && \
+    curl -L https://github.com/kubernetes/kompose/releases/download/v${KOMPOSE_VERSION}/kompose-linux-amd64 -o kompose && chmod +x kompose && mv ./kompose /usr/local/bin/kompose && \
     # Install Terraform, TFLint
     curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip && unzip terraform.zip && mv terraform /usr/local/bin/ && rm terraform.zip && \
     curl -fsSL https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip -o tflint.zip && unzip tflint.zip && mv tflint /usr/local/bin/ && rm tflint.zip &&\
