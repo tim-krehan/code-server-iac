@@ -41,7 +41,7 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install additional tools and dependencies
-RUN  set -eux; apt-get update && apt-upgrade -y && apt-get install -y \
+RUN  set -eux; apt-get update && apt-get upgrade -y && apt-get install -y \
     --no-install-recommends \
     software-properties-common \
     bash-completion \
