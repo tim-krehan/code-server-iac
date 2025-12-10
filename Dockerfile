@@ -54,8 +54,8 @@ RUN  set -eux; apt-get update && && apt-upgrade -y && apt-get install -y \
     vim \
     jq \
     iputils-ping \
-    netcat-openbsd \
-    && rm -rf /var/lib/apt/lists/*
+    netcat-openbsd && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install k9s
 RUN set -eux; \
