@@ -17,6 +17,8 @@ ARG HELMIFY_VERSION=0.4.19
 ARG K9S_VERSION=0.50.16
 # managed manually, must match the cluster :)
 ARG KUBECTL_VERSION=1.34.2
+# github-releases:kubernetes-sigs/krew
+ARG KREW_VERSION=0.4.5
 # github-releases:kubernetes/kompose
 ARG KOMPOSE_VERSION=1.37.0
 # github-releases:kubernetes-sigs/kustomize
@@ -39,7 +41,7 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install additional tools and dependencies
-RUN  set -eux; apt-get update && apt-get install -y \
+RUN  set -eux; apt-get update && && apt-upgrade -y && apt-get install -y \
     --no-install-recommends \
     software-properties-common \
     bash-completion \
@@ -51,6 +53,8 @@ RUN  set -eux; apt-get update && apt-get install -y \
     git \
     vim \
     jq \
+    iputils-ping \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Install k9s
@@ -84,6 +88,14 @@ RUN set -eux; \
 
 # Switch back to the non-root user
 USER coder
+
+# krew installation
+RUN cd "$(mktemp -d)" && \
+    curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/download/v${KREW_VERSION}/krew-linux_amd64.tar.gz" && \
+    tar zxvf "krew-linux_amd64.tar.gz" && \
+    export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH" && \
+    ./krew-linux_amd64 install krew && \
+    kubectl krew install oidc-login
 
 ENV PATH=$PATH:/go/bin
 ENV GOPATH=/go
