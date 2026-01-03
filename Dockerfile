@@ -26,7 +26,7 @@ ARG KUSTOMIZE_VERSION=5.6.0
 # github-releases:PowerShell/PowerShell
 ARG POWERSHELL_VERSION=7.5.4
 # github-tags:python/cpython
-ARG PYTHON_VERSION=3.14.1
+ARG PYTHON_VERSION=3.14.2
 # github-releases:stern/stern
 ARG STERN_VERSION=1.32.0
 # github-releases:hashicorp/terraform
