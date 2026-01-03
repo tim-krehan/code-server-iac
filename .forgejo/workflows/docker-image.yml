@@ -24,7 +24,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       
-      - name: Install BuildAh
+      - name: Install Buildah
         run: |
           apt-get update
           apt-get -y install buildah
@@ -53,7 +53,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          buildah build . \
+          buildah build \
             --build-arg CODE_SERVER_IAC_VERSION=${{ env.NEW_VERSION }} \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEW_VERSION }}
