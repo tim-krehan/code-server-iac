@@ -24,6 +24,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       
+      - name: Install BuildAh
+        run: |
+          apt-get update
+          apt-get -y install buildah
+      
       - name: Get the current date for date-based versioning
         run: |
           DATE_VERSION=$(date +'%Y.%m')
@@ -46,16 +51,9 @@ jobs:
           git tag -a "${{ env.NEW_VERSION }}" -m "Release ${{ env.NEW_VERSION }}"
           git push origin "${{ env.NEW_VERSION }}"
 
-      - name: Log into registry ${{ env.REGISTRY }}
-        uses: docker/login-action@v3
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: actions
-          password: ${{ secrets.FORGEJO_TOKEN }}
-
       - name: Build Docker image
         run: |
-          docker build . \
+          buildah build . \
             --build-arg CODE_SERVER_IAC_VERSION=${{ env.NEW_VERSION }} \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest \
             --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEW_VERSION }}
@@ -63,5 +61,6 @@ jobs:
       - name: Push Docker image
         if: ${{ github.event_name != 'pull_request' }}
         run: |
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          docker push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEW_VERSION }}
+          buildah login ${{ env.REGISTRY }} --username actions --password "${{ secrets.FORGEJO_TOKEN }}"
+          buildah push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          buildah push ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEW_VERSION }}
