@@ -28,7 +28,7 @@ ARG POWERSHELL_VERSION=7.5.4
 # github-tags:python/cpython
 ARG PYTHON_VERSION=3.14.1
 # github-releases:stern/stern
-ARG STERN_VERSION=1.32.0
+ARG STERN_VERSION=1.33.1
 # github-releases:hashicorp/terraform
 ARG TERRAFORM_VERSION=1.14.3
 # github-releases:terraform-linters/tflint
