@@ -7,6 +7,8 @@ ARG CODE_SERVER_IAC_VERSION=0.0.0
 ARG ARGOCD_VERSION=3.2.3
 # github-releases:cli/cli
 ARG GHCLI_VERSION=2.83.2
+# github-releases:hickford/git-credential-oauth
+ARG GIT_CREDENTIAL_OAUTH_VERSION=0.17.0
 # github-releases:golang/go
 ARG GOLANG_VERSION=1.24.4
 # github-releases:helm/helm
@@ -60,8 +62,8 @@ RUN set -eux; apt-get update && apt-get upgrade -y && \
     add-apt-repository ppa:deadsnakes/ppa --remove --yes && \
     rm -rf /var/lib/apt/lists/*
 
-# Install k9s
 RUN set -eux; \
+    # Install k9s
     curl -fsSL https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz | tar -C /usr/local/bin/ -xz && rm /usr/local/bin/LICENSE /usr/local/bin/README.md && \
     # Install ArgoCD CLI
     curl -fsSL -o /usr/local/bin/argocd "https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64" && \
@@ -87,7 +89,9 @@ RUN set -eux; \
     # Install Starship
     curl -sS https://starship.rs/install.sh | sh -s -- --yes && \
     # Install GitHub CLI
-    curl -fsSL https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.tar.gz | tar -xz -C /tmp && mv /tmp/gh_${GHCLI_VERSION}_linux_amd64/bin/gh /usr/bin/ && rm -rf /tmp/gh_${GHCLI_VERSION}_linux_amd64
+    curl -fsSL https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.tar.gz | tar -xz -C /tmp && mv /tmp/gh_${GHCLI_VERSION}_linux_amd64/bin/gh /usr/bin/ && rm -rf /tmp/gh_${GHCLI_VERSION}_linux_amd64 && \
+    # Install git-credential-oauth
+    curl -fsSL https://github.com/hickford/git-credential-oauth/releases/download/v${GIT_CREDENTIAL_OAUTH_VERSION}/git-credential-oauth_${GIT_CREDENTIAL_OAUTH_VERSION}_linux_amd64.tar.gz | tar -xz -C /usr/local/bin/
 
 # Switch back to the non-root user
 USER coder
