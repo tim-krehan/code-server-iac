@@ -41,12 +41,14 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install additional tools and dependencies
-RUN  set -eux; apt-get update && apt-get upgrade -y && apt-get install -y \
+RUN set -eux; apt-get update && apt-get upgrade -y && \
+    add-apt-repository ppa:deadsnakes/ppa --yes && \
+    apt-get install -y \
     --no-install-recommends \
     software-properties-common \
     bash-completion \
     unzip \
-    python${PYTHON_VERSION} \
+    python${PYTHON_VERSION%.*} \
     python${PYTHON_VERSION%%.*}-venv \
     python${PYTHON_VERSION%%.*}-pip \
     curl \
@@ -55,6 +57,7 @@ RUN  set -eux; apt-get update && apt-get upgrade -y && apt-get install -y \
     jq \
     iputils-ping \
     netcat-openbsd && \
+    add-apt-repository ppa:deadsnakes/ppa --remove --yes && \
     rm -rf /var/lib/apt/lists/*
 
 # Install k9s
