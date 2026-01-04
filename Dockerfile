@@ -74,7 +74,7 @@ RUN set -eux; \
     ln -s /usr/local/go/bin/go /usr/bin/go &&\
     mkdir -p /go/bin && chmod -R 777 /go && chown -R coder:coder /go && \
     # Install Helm, Helmify, kustomize, kubectl, stern
-    curl -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | tar -xz && mv linux-amd64/helm /usr/local/bin/helm && \
+    curl --retry 5 --retry-delay 2 -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz && tar -xzf helm.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && rm -rf linux-amd64 helm.tar.gz && \
     curl -fsSL https://github.com/arttor/helmify/releases/download/v${HELMIFY_VERSION}/helmify_Linux_x86_64.tar.gz |tar -C /usr/local/bin/ -xz && \
     curl -fsSL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz|tar -C /usr/local/bin/ -xz && \
     curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && chmod +x kubectl && mv kubectl /usr/local/bin/ && \
