@@ -59,7 +59,7 @@ RUN set -eux; apt-get update && apt-get upgrade -y && \
     apt-get install -y \
     python${PYTHON_VERSION%.*} \
     python${PYTHON_VERSION%%.*}-venv \
-    python${PYTHON_VERSION%%.*}-pip \
+    python${PYTHON_VERSION%%.*}-pip && \
     add-apt-repository ppa:deadsnakes/ppa --remove --yes && \
     rm -rf /var/lib/apt/lists/*
 
