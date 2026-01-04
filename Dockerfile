@@ -55,8 +55,8 @@ RUN set -eux; apt-get update && apt-get upgrade -y && \
     jq \
     iputils-ping \
     netcat-openbsd && \
-    apt-get install -y && \
     add-apt-repository ppa:deadsnakes/ppa --yes && \
+    apt-get install -y && \
     python${PYTHON_VERSION%.*} \
     python${PYTHON_VERSION%%.*}-venv \
     python${PYTHON_VERSION%%.*}-pip \
