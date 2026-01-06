@@ -8,7 +8,7 @@ ARG ARGOCD_VERSION=3.2.3
 # github-releases:cli/cli
 ARG GHCLI_VERSION=2.83.2
 # github-releases:hickford/git-credential-oauth
-ARG GIT_CREDENTIAL_OAUTH_VERSION=0.17.0
+ARG GIT_CREDENTIAL_OAUTH_VERSION=0.17.1
 # github-releases:golang/go
 ARG GOLANG_VERSION=1.24.4
 # github-releases:helm/helm
