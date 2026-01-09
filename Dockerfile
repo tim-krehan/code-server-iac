@@ -63,35 +63,86 @@ RUN set -eux; apt-get update && apt-get upgrade -y && \
     add-apt-repository ppa:deadsnakes/ppa --remove --yes && \
     rm -rf /var/lib/apt/lists/*
 
+# k9s
 RUN set -eux; \
-    # Install k9s
-    curl -fsSL https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz | tar -C /usr/local/bin/ -xz && rm /usr/local/bin/LICENSE /usr/local/bin/README.md && \
-    # Install ArgoCD CLI
+    curl -fsSL https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz && \
+    tar -C /usr/local/bin/ -xz && \
+    rm /usr/local/bin/LICENSE /usr/local/bin/README.md
+
+# ArgoCD CLI
+RUN set -eux; \
     curl -fsSL -o /usr/local/bin/argocd "https://github.com/argoproj/argo-cd/releases/download/v${ARGOCD_VERSION}/argocd-linux-amd64" && \
-    chmod +x /usr/local/bin/argocd && \
-    # Install Go
+    chmod +x /usr/local/bin/argocd
+
+# Go
+RUN set -eux; \
     curl -fsSL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz | tar -C /usr/local -xz && \
-    ln -s /usr/local/go/bin/go /usr/bin/go &&\
-    mkdir -p /go/bin && chmod -R 777 /go && chown -R coder:coder /go && \
-    # Install Helm, Helmify, kustomize, kubectl, stern
-    curl --retry 5 --retry-delay 2 -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz && tar -xzf helm.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && rm -rf linux-amd64 helm.tar.gz && \
-    curl -fsSL https://github.com/arttor/helmify/releases/download/v${HELMIFY_VERSION}/helmify_Linux_x86_64.tar.gz |tar -C /usr/local/bin/ -xz && \
-    curl -fsSL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz|tar -C /usr/local/bin/ -xz && \
-    curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && chmod +x kubectl && mv kubectl /usr/local/bin/ && \
-    curl -fsSL https://github.com/stern/stern/releases/download/v${STERN_VERSION}/stern_${STERN_VERSION}_linux_amd64.tar.gz|tar -C /usr/local/bin/ -xz && rm /usr/local/bin/LICENSE && \
-    curl -L https://github.com/kubernetes/kompose/releases/download/v${KOMPOSE_VERSION}/kompose-linux-amd64 -o kompose && chmod +x kompose && mv ./kompose /usr/local/bin/kompose && \
-    # Install Terraform, TFLint
-    curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip && unzip terraform.zip && mv terraform /usr/local/bin/ && rm terraform.zip && \
-    curl -fsSL https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip -o tflint.zip && unzip tflint.zip && mv tflint /usr/local/bin/ && rm tflint.zip &&\
-    # Install PowerShell
+    ln -s /usr/local/go/bin/go /usr/bin/go && \
+    mkdir -p /go/bin && chmod -R 777 /go && chown -R coder:coder /go
+
+# Helm
+RUN set -eux; \
+    curl --retry 5 --retry-delay 2 -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz && \
+    tar -xzf helm.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && \
+    rm -rf linux-amd64 helm.tar.gz
+
+# Helmify
+RUN set -eux; \
+    curl -fsSL https://github.com/arttor/helmify/releases/download/v${HELMIFY_VERSION}/helmify_Linux_x86_64.tar.gz |tar -C /usr/local/bin/ -xz
+
+# kustomize
+RUN set -eux; \
+    curl -fsSL https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz |tar -C /usr/local/bin/ -xz
+
+# kubectl
+RUN set -eux; \
+    curl -LO "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" && \
+    chmod +x kubectl && \
+    mv kubectl /usr/local/bin/
+
+# stern
+RUN set -eux; \
+    curl -fsSL https://github.com/stern/stern/releases/download/v${STERN_VERSION}/stern_${STERN_VERSION}_linux_amd64.tar.gz |tar -C /usr/local/bin/ -xz \
+    && rm /usr/local/bin/LICENSE
+
+# kompose
+RUN set -eux; \
+    curl -L https://github.com/kubernetes/kompose/releases/download/v${KOMPOSE_VERSION}/kompose-linux-amd64 -o kompose && \
+    chmod +x kompose && \
+    mv ./kompose /usr/local/bin/kompose
+
+# Install Terraform
+RUN set -eux; \
+    curl -fsSL https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip -o terraform.zip && \
+    unzip terraform.zip && \
+    mv terraform /usr/local/bin/ && \
+    rm terraform.zip
+
+# TFLint
+RUN set -eux; \
+    curl -fsSL https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/tflint_linux_amd64.zip -o tflint.zip && \
+    unzip tflint.zip && \
+    mv tflint /usr/local/bin/ && \
+    rm tflint.zip
+
+# Install PowerShell
+RUN set -eux; \
     curl -fsSL https://github.com/PowerShell/PowerShell/releases/download/v${POWERSHELL_VERSION}/powershell-${POWERSHELL_VERSION}-linux-x64.tar.gz | tar -xz -C /usr/local/bin/ && \
     chmod +x /usr/local/bin/pwsh && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* && \
-    # Install Starship
-    curl -sS https://starship.rs/install.sh | sh -s -- --yes && \
-    # Install GitHub CLI
-    curl -fsSL https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.tar.gz | tar -xz -C /tmp && mv /tmp/gh_${GHCLI_VERSION}_linux_amd64/bin/gh /usr/bin/ && rm -rf /tmp/gh_${GHCLI_VERSION}_linux_amd64 && \
-    # Install git-credential-oauth
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install Starship
+RUN set -eux; \
+    curl -sS https://starship.rs/install.sh | sh -s -- --yes
+
+# Install GitHub CLI
+RUN set -eux; \
+    curl -fsSL https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.tar.gz | tar -xz -C /tmp && \
+    mv /tmp/gh_${GHCLI_VERSION}_linux_amd64/bin/gh /usr/bin/ && \
+    rm -rf /tmp/gh_${GHCLI_VERSION}_linux_amd64
+
+# Install git-credential-oauth
+RUN set -eux; \
     curl -fsSL https://github.com/hickford/git-credential-oauth/releases/download/v${GIT_CREDENTIAL_OAUTH_VERSION}/git-credential-oauth_${GIT_CREDENTIAL_OAUTH_VERSION}_linux_amd64.tar.gz | tar -xz -C /usr/local/bin/
 
 # Switch back to the non-root user
