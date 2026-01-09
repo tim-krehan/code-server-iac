@@ -60,13 +60,11 @@ RUN set -eux; apt-get update && apt-get upgrade -y && \
     python${PYTHON_VERSION%.*} \
     python${PYTHON_VERSION%%.*}-venv \
     python${PYTHON_VERSION%%.*}-pip && \
-    add-apt-repository ppa:deadsnakes/ppa --remove --yes && \
     rm -rf /var/lib/apt/lists/*
 
 # k9s
 RUN set -eux; \
-    curl -fsSL https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz && \
-    tar -C /usr/local/bin/ -xz && \
+    curl -fsSL https://github.com/derailed/k9s/releases/download/v${K9S_VERSION}/k9s_Linux_amd64.tar.gz | tar -C /usr/local/bin/ -xz && \
     rm /usr/local/bin/LICENSE /usr/local/bin/README.md
 
 # ArgoCD CLI
