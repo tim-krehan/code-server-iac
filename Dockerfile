@@ -11,8 +11,6 @@ ARG GHCLI_VERSION=2.83.2
 ARG GIT_CREDENTIAL_OAUTH_VERSION=0.17.1
 # github-releases:golang/go
 ARG GOLANG_VERSION=1.24.4
-# github-releases:helm/helm
-ARG HELM_VERSION=4.0.4
 # github-releases:arttor/helmify
 ARG HELMIFY_VERSION=0.4.19
 # github-releases:derailed/k9s
@@ -80,9 +78,12 @@ RUN set -eux; \
 
 # Helm
 RUN set -eux; \
-    curl --retry 5 --retry-delay 2 -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz -o helm.tar.gz && \
-    tar -xzf helm.tar.gz && mv linux-amd64/helm /usr/local/bin/helm && \
-    rm -rf linux-amd64 helm.tar.gz
+    apt-get install curl gpg apt-transport-https --yes && \
+    curl -fsSL https://packages.buildkite.com/helm-linux/helm-debian/gpgkey | gpg --dearmor | tee /usr/share/keyrings/helm.gpg > /dev/null && \
+    echo "deb [signed-by=/usr/share/keyrings/helm.gpg] https://packages.buildkite.com/helm-linux/helm-debian/any/ any main" | tee /etc/apt/sources.list.d/helm-stable-debian.list && \
+    apt-get update && \
+    apt-get install helm && \
+    rm -rf /var/lib/apt/lists/* /etc/apt/sources.list.d/helm-stable-debian.list /usr/share/keyrings/helm.gpg
 
 # Helmify
 RUN set -eux; \
