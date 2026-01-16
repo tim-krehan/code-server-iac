@@ -22,7 +22,7 @@ ARG KUBECTL_VERSION=1.34.2
 # github-releases:kubernetes-sigs/krew
 ARG KREW_VERSION=0.4.5
 # github-releases:kubernetes/kompose
-ARG KOMPOSE_VERSION=1.37.0
+ARG KOMPOSE_VERSION=1.38.0
 # github-releases:kubernetes-sigs/kustomize
 ARG KUSTOMIZE_VERSION=5.6.0
 # github-releases:PowerShell/PowerShell
