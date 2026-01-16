@@ -43,19 +43,26 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install additional tools and dependencies
-RUN set -eux; apt-get update && apt-get upgrade -y && \
-    apt-get install -y \
-    --no-install-recommends \
-    software-properties-common \
-    bash-completion \
-    unzip \
-    curl \
-    git \
-    vim \
-    jq \
-    iputils-ping \
-    netcat-openbsd && \
-    add-apt-repository ppa:deadsnakes/ppa --yes && \
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        bash-completion \
+        unzip \
+        curl \
+        git \
+        vim \
+        jq \
+        iputils-ping \
+        dnsutils \
+        netcat-openbsd;
+
+# Python
+RUN set -eux; \
+    install -d /etc/apt/keyrings; \
+    curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xF23C5A6CF475977595C89F51BA6932366A755776' \
+      | gpg --dearmor -o /etc/apt/keyrings/deadsnakes.gpg; \
+    echo "deb [signed-by=/etc/apt/keyrings/deadsnakes.gpg] https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble main" \
+      > /etc/apt/sources.list.d/deadsnakes.list; \
     apt-get install -y \
     python${PYTHON_VERSION%.*} \
     python${PYTHON_VERSION%%.*}-venv \
