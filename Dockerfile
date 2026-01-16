@@ -64,7 +64,7 @@ RUN set -eux; \
       | gpg --dearmor -o /etc/apt/keyrings/deadsnakes.gpg; \
     echo "deb [signed-by=/etc/apt/keyrings/deadsnakes.gpg] https://ppa.launchpadcontent.net/deadsnakes/ppa/ubuntu noble main" \
       > /etc/apt/sources.list.d/deadsnakes.list; \
-    apt-get install -y \
+    apt-get update && apt-get install -y \
     python${PYTHON_VERSION%.*} \
     python${PYTHON_VERSION%%.*}-venv \
     python${PYTHON_VERSION%%.*}-pip && \
