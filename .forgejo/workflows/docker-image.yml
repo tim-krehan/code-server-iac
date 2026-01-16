@@ -15,10 +15,6 @@ env:
 jobs:
   build_and_publish:
     runs-on: ubuntu-24.04
-    permissions:
-      contents: write # Required for tagging commits
-      packages: write
-      id-token: write # Required for Forgjo Container Registry authentication
 
     steps:
       - name: Checkout repository
@@ -32,7 +28,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ env.FORGEJO_REPOSITORY_OWNER }}
+          username: ${{ env.CONTAINER_REGISTRY_TOKEN }}
           password: ${{ secrets.FORGEJO_TOKEN }}
       
       - name: Get the current date for date-based versioning
