@@ -54,7 +54,8 @@ RUN set -eux; \
         jq \
         iputils-ping \
         dnsutils \
-        netcat-openbsd;
+        netcat-openbsd \
+        gpg;
 
 # Python
 RUN set -eux; \
