@@ -1,7 +1,7 @@
 # Use the base image for code-server
 FROM ghcr.io/coder/code-server:4.108.1-noble
 
-ARG CODE_SERVER_IAC_VERSION=0.0.0
+ARG CODE_SERVER_IAC_VERSION=0.0.1
 
 # github-releases:argoproj/argo-cd
 ARG ARGOCD_VERSION=3.2.5
