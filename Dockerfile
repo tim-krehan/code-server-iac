@@ -4,7 +4,7 @@ FROM ghcr.io/coder/code-server:4.112.0-noble
 ARG CODE_SERVER_IAC_VERSION=0.0.1
 
 # github-releases:argoproj/argo-cd
-ARG ARGOCD_VERSION=3.3.5
+ARG ARGOCD_VERSION=3.3.6
 # github-releases:cli/cli
 ARG GHCLI_VERSION=2.89.0
 # github-releases:hickford/git-credential-oauth
