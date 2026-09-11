@@ -1,5 +1,5 @@
 # Use the base image for code-server
-FROM ghcr.io/coder/code-server:4.136.2-noble
+FROM ghcr.io/coder/code-server:4.137.0-noble
 
 ARG CODE_SERVER_IAC_VERSION=0.0.1
 
